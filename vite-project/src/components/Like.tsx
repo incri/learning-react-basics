@@ -12,6 +12,7 @@ const Like = ({onClick}:Props) => {
   const toggle = () => {
     setLike(!like);
     onClick();
+    console.log(like)
   }
   if (like){
     return (
