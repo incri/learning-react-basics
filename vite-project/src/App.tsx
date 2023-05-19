@@ -5,6 +5,7 @@ import { useState } from "react";
 import {SiSololearn} from "react-icons/si";
 import Like from "./components/Like";
 import Mart from "./components/Mart";
+import Bug from "./components/Bug";
 
 function app() {
 
@@ -19,6 +20,7 @@ function app() {
     console.log(item);
   }
   true
+  
   const [cart, setcart] = useState({
     discount: .1,
     item: [
@@ -32,7 +34,16 @@ function app() {
     console.log(cart.item)
   }
 
-  
+  const [bugs, setBugs] = useState(
+    [
+      {id:1 , title: 'Product 1', fixed:false},
+      {id:2 , title: 'Product 2', fixed:false}
+    ]
+  );
+
+  const handleBug = () => {
+    setBugs(bugs.map(bug => bug.id === 1 ? {...bug, fixed: true}: bug))
+  }
 
   const [alertVisible, setAlertVisible] = useState(false)
   return (
@@ -44,6 +55,7 @@ function app() {
       <Button children= {<SiSololearn size="30"/>} onClick={() => setAlertVisible(true)} />
       <Like onClick={() => console.log("Liked")}/>
       <Mart  onClick={() => handleClick()} />
+      <Bug onClick={() => handleBug()}/>
 
     </>
     
