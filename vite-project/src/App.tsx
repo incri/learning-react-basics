@@ -6,7 +6,7 @@ import {SiSololearn} from "react-icons/si";
 import Like from "./components/Like";
 import Mart from "./components/Mart";
 import Bug from "./components/Bug";
-
+import { produce } from "immer";
 function app() {
 
   let item = [
@@ -31,18 +31,22 @@ function app() {
 
   const handleClick = () => {
     setcart({...cart, item: cart.item.map(item => item.id === 1? {...item, quantity:item.quantity+1}:item)})
-    console.log(cart.item)
   }
 
   const [bugs, setBugs] = useState(
     [
-      {id:1 , title: 'Product 1', fixed:false},
-      {id:2 , title: 'Product 2', fixed:false}
+      {id:1 , title: 'Bug 1', fixed:false},
+      {id:2 , title: 'Bug 2', fixed:false}
     ]
   );
 
   const handleBug = () => {
-    setBugs(bugs.map(bug => bug.id === 1 ? {...bug, fixed: true}: bug))
+    // setBugs(bugs.map(bug => bug.id === 1 ? {...bug, fixed: true}: bug))
+    setBugs(produce(draft => {
+      const bug = draft.find(bug => bug.id == 1);
+      if(bug) bug.fixed = true;
+
+    }))
   }
 
   const [alertVisible, setAlertVisible] = useState(false)
@@ -55,6 +59,7 @@ function app() {
       <Button children= {<SiSololearn size="30"/>} onClick={() => setAlertVisible(true)} />
       <Like onClick={() => console.log("Liked")}/>
       <Mart  onClick={() => handleClick()} />
+      {bugs.map(bug => <p key = {bug.id}>{bug.title} {bug.fixed ? 'Fixed' : 'New'}</p>)}
       <Bug onClick={() => handleBug()}/>
 
     </>
