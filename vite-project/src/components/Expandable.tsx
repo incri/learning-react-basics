@@ -5,7 +5,7 @@ interface Props{
   children: String;
   maxChar : number;
 }
-const Expandable = ({children, maxChar = 100}: Props) => {
+const Expandable = ({children, maxChar}: Props) => {
   const[isExtended, setExtended] = useState(false);
 
   if (children.length <= maxChar) return(
