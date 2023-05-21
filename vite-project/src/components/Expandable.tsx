@@ -26,5 +26,5 @@ const Expandable = ({children, maxChar}: Props) => {
     
   ) 
 }
-
+ 
 export default Expandable

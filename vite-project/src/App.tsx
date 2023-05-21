@@ -10,7 +10,7 @@ import { produce } from "immer";
 import Cart from "./components/Cart";
 import Nav from "./components/Nav";
 import Expandable from "./components/Expandable";
-
+import Form from "./components/Form";
 function app() {
 
   let item = [
@@ -94,9 +94,14 @@ function app() {
         <Cart cartItems={cartItems} onClear={()=> setCartItems([])}/>
         <Nav cartItemCount={cartItems.length}/>
       </div>
+      <div>
+        <Form />
+      </div>
     </>
 
   );
+
+
 
 
 
