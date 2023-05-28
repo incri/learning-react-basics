@@ -1,30 +1,34 @@
-import React from 'react'
-import { useState } from 'react';
+import React from "react";
+import { useState } from "react";
 
-interface Props{
+interface Props {
   children: String;
-  maxChar : number;
+  maxChar: number;
 }
-const Expandable = ({children, maxChar}: Props) => {
-  const[isExtended, setExtended] = useState(false);
+const Expandable = ({ children, maxChar }: Props) => {
+  const [isExtended, setExtended] = useState(false);
 
-  if (children.length <= maxChar) return(
-    
+  if (children.length <= maxChar)
+    return (
+      <>
+        <h1>Expandable Text</h1>
+        <p>{children}</p>
+      </>
+    );
+  const text = isExtended ? children : children.substring(0, maxChar);
+
+  return (
     <>
       <h1>Expandable Text</h1>
-      <p>{children}</p>
+      <p>
+        {text}...
+        <button onClick={() => setExtended(!isExtended)}>
+          {isExtended ? "Less" : "More"}
+        </button>
+      </p>
+      ;
     </>
-    
-  ) 
-  const text = isExtended? children: children.substring(0, maxChar)
-  
-  return(
-    <>
-      <h1>Expandable Text</h1>
-      <p>{text}...<button onClick={()=> setExtended(!isExtended)}>{isExtended ? 'Less' : 'More'}</button></p>;
-    </>
-    
-  ) 
-}
- 
-export default Expandable
+  );
+};
+
+export default Expandable;

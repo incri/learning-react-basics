@@ -1,13 +1,11 @@
-import React from 'react'
+import React from "react";
 
-interface Props{
-    cartItemCount : number;
+interface Props {
+  cartItemCount: number;
 }
 
-const Nav = ({cartItemCount}: Props) => {
-  return (
-    <div>Item Count : {cartItemCount}</div>
-  )
-}
+const Nav = ({ cartItemCount }: Props) => {
+  return <div>Item Count : {cartItemCount}</div>;
+};
 
-export default Nav
+export default Nav;

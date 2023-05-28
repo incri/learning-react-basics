@@ -1,8 +1,8 @@
 import ListGroup from "./components/ListGroupComponent";
-import Alert  from "./components/Alert";
+import Alert from "./components/Alert";
 import Button from "./components/Button";
 import { useState } from "react";
-import {SiSololearn} from "react-icons/si";
+import { SiSololearn } from "react-icons/si";
 import Like from "./components/Like";
 import Mart from "./components/Mart";
 import Bug from "./components/Bug";
@@ -11,58 +11,55 @@ import Cart from "./components/Cart";
 import Nav from "./components/Nav";
 import Expandable from "./components/Expandable";
 import Form from "./components/Form";
+import ProductList from "./components/ProductList";
 function app() {
+  let item = ["Air", "Water", "Earth", "Fire"];
 
-  let item = [
-    'Air',
-    'Water',
-    'Earth',
-    'Fire'
-  ]
-
-  let emptys = []
-
-
-
+  let emptys = [];
+  const [categories, setCategories] = useState("");
   const handleSelectItem = (item: string) => {
     console.log(item);
-  }
-  true
-  
+  };
+  true;
 
   const [cart, setcart] = useState({
-    discount: .1,
+    discount: 0.1,
     item: [
-      {id:1 , title: 'Product 1', quantity:1},
-      {id:2 , title: 'Product 2', quantity:1}
-    ]
+      { id: 1, title: "Product 1", quantity: 1 },
+      { id: 2, title: "Product 2", quantity: 1 },
+    ],
   });
 
   const handleClick = () => {
-    setcart({...cart, item: cart.item.map(item => item.id === 1? {...item, quantity:item.quantity+1}:item)})
-  }
+    setcart({
+      ...cart,
+      item: cart.item.map((item) =>
+        item.id === 1 ? { ...item, quantity: item.quantity + 1 } : item
+      ),
+    });
+  };
 
-  const [bugs, setBugs] = useState(
-    [
-      {id:1 , title: 'Bug 1', fixed:false},
-      {id:2 , title: 'Bug 2', fixed:false}
-    ]
-  );
+  const [bugs, setBugs] = useState([
+    { id: 1, title: "Bug 1", fixed: false },
+    { id: 2, title: "Bug 2", fixed: false },
+  ]);
 
   const handleBug = () => {
     // setBugs(bugs.map(bug => bug.id === 1 ? {...bug, fixed: true}: bug))
-    setBugs(produce(draft => {
-      const bug = draft.find(bug => bug.id == 1);
-      if(bug) bug.fixed = true;
+    setBugs(
+      produce((draft) => {
+        const bug = draft.find((bug) => bug.id == 1);
+        if (bug) bug.fixed = true;
+      })
+    );
+  };
 
-    }))
-  }
+  const [alertVisible, setAlertVisible] = useState(false);
 
-  const [alertVisible, setAlertVisible] = useState(false)
+  const [cartItems, setCartItems] = useState(["item 1", "item 2", "item 3"]);
 
-  const [cartItems, setCartItems] = useState(['item 1', 'item 2', 'item 3'])
-
-  let text = "Lorem ipsum dolor, sit amet consectetur adipisicing elit. \
+  let text =
+    "Lorem ipsum dolor, sit amet consectetur adipisicing elit. \
   Ratione enim placeat cupiditate nam! Necessitatibus expedita earum l\
   aboriosam nesciunt architecto dolorum animi possimus voluptatem et i \
   nventore nam fugiat fuga, dolores laborum quas asperiores suscipit \
@@ -72,40 +69,62 @@ function app() {
   nemo vitae consectetur enim optio nobis officiis, reprehenderit unde soluta \
   accusamus aliquid, fugit similique culpa exercitationem molestias quod quia t \
   empora! Minus amet fugit harum rerum veniam soluta aliquam, illum asperiores \
-  tempora, debitis accusantium quos officiis quam modi animi accusamus?"
+  tempora, debitis accusantium quos officiis quam modi animi accusamus?";
 
   return (
     <>
-     {alertVisible && <Alert children="You have been alert" onClose={() => setAlertVisible(false)}/>}
+      {alertVisible && (
+        <Alert
+          children="You have been alert"
+          onClose={() => setAlertVisible(false)}
+        />
+      )}
       <div>
-        <ListGroup items={item} heading="Cities" onSelectItem={handleSelectItem}  />
+        <ListGroup
+          items={item}
+          heading="Cities"
+          onSelectItem={handleSelectItem}
+        />
       </div>
-      <Expandable maxChar={100}>
-        {text}
-      </Expandable>
-      <Button children= {<SiSololearn size="30"/>} onClick={() => setAlertVisible(true)} />
-      <Like onClick={() => console.log("Liked")}/>
-      {cart.item.map(item => <p key = {item.id}>{item.title} = {item.quantity}</p>)}
-      <Mart  onClick={() => handleClick()} />
-      {bugs.map(bug => <p key = {bug.id}>{bug.title} {bug.fixed ? 'Fixed' : 'New'}</p>)}
-      <Bug onClick={() => handleBug()}/>
+      <Expandable maxChar={100}>{text}</Expandable>
+      <Button
+        children={<SiSololearn size="30" />}
+        onClick={() => setAlertVisible(true)}
+      />
+      <Like onClick={() => console.log("Liked")} />
+      {cart.item.map((item) => (
+        <p key={item.id}>
+          {item.title} = {item.quantity}
+        </p>
+      ))}
+      <Mart onClick={() => handleClick()} />
+      {bugs.map((bug) => (
+        <p key={bug.id}>
+          {bug.title} {bug.fixed ? "Fixed" : "New"}
+        </p>
+      ))}
+      <Bug onClick={() => handleBug()} />
 
       <div>
-        <Cart cartItems={cartItems} onClear={()=> setCartItems([])}/>
-        <Nav cartItemCount={cartItems.length}/>
+        <Cart cartItems={cartItems} onClear={() => setCartItems([])} />
+        <Nav cartItemCount={cartItems.length} />
       </div>
       <div>
         <Form />
+        <ProductList categories={categories} />
+      </div>
+      <div>
+        <select
+          className="form-select"
+          onChange={(event) => setCategories(event.target.value)}
+        >
+          <option value=""></option>
+          <option value="Clothing">Clothing</option>
+          <option value="Household">HouseHold</option>
+        </select>
       </div>
     </>
-
   );
-
-
-
-
-
 }
 
-
-export default app
+export default app;

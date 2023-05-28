@@ -1,20 +1,27 @@
-import { ReactNode } from 'react'
+import { ReactNode } from "react";
 
-interface Props{
-    children: ReactNode;
-    onClose: () => void;
+interface Props {
+  children: ReactNode;
+  onClose: () => void;
 }
 
-import React from 'react'
+import React from "react";
 
-const Alert = ({children, onClose}: Props) => {
+const Alert = ({ children, onClose }: Props) => {
   return (
     <>
-    <div className = "alert alert-danger alert-dismissible">{children}
-    <button type="button" className="btn-close" data-bs-dismiss="alert" aria-label="Close" onClick={onClose}></button>
-    </div>
+      <div className="alert alert-danger alert-dismissible">
+        {children}
+        <button
+          type="button"
+          className="btn-close"
+          data-bs-dismiss="alert"
+          aria-label="Close"
+          onClick={onClose}
+        ></button>
+      </div>
     </>
-  )
-}
+  );
+};
 
-export default Alert
+export default Alert;
