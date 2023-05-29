@@ -12,8 +12,24 @@ import Nav from "./components/Nav";
 import Expandable from "./components/Expandable";
 import Form from "./components/Form";
 import ProductList from "./components/ProductList";
+import axios from "axios";
+import { useEffect } from "react";
+
+interface User {
+  id: number;
+  name: string;
+}
+
 function app() {
   let item = ["Air", "Water", "Earth", "Fire"];
+
+  const [users, setUsers] = useState<User[]>([]);
+
+  useEffect(() => {
+    axios
+      .get<User[]>("https://jsonplaceholder.typicode.com/users")
+      .then((res) => setUsers(res.data));
+  }, []);
 
   let emptys = [];
   const [categories, setCategories] = useState("");
@@ -122,6 +138,14 @@ function app() {
           <option value="Clothing">Clothing</option>
           <option value="Household">HouseHold</option>
         </select>
+      </div>
+      <div>
+        <h2>Data from jsonPlaceHolder</h2>
+        <ul>
+          {users.map((user) => (
+            <li key={user.id}>{user.name}</li>
+          ))}
+        </ul>
       </div>
     </>
   );
