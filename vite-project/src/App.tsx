@@ -12,7 +12,7 @@ import Nav from "./components/Nav";
 import Expandable from "./components/Expandable";
 import Form from "./components/Form";
 import ProductList from "./components/ProductList";
-import axios from "axios";
+import axios, { CanceledError } from "axios";
 import { useEffect } from "react";
 
 interface User {
@@ -27,10 +27,18 @@ function app() {
   const [error, setError] = useState("");
 
   useEffect(() => {
+    const controller = new AbortController();
     axios
-      .get<User[]>("https://jsonplaceholder.typicode.com/cusers")
+      .get<User[]>("https://jsonplaceholder.typicode.com/users", {
+        signal: controller.signal,
+      })
       .then((res) => setUsers(res.data))
-      .catch((err) => setError(err.message));
+      .catch((err) => {
+        if (err instanceof CanceledError) return;
+        setError(err.message);
+      });
+
+    return () => controller.abort();
   }, []);
 
   let emptys = [];
