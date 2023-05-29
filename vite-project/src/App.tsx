@@ -25,17 +25,22 @@ function app() {
 
   const [users, setUsers] = useState<User[]>([]);
   const [error, setError] = useState("");
+  const [isLoading, setLoading] = useState(false);
 
   useEffect(() => {
     const controller = new AbortController();
+    setLoading(true);
     axios
       .get<User[]>("https://jsonplaceholder.typicode.com/users", {
         signal: controller.signal,
       })
-      .then((res) => setUsers(res.data))
+      .then((res) => {
+        setUsers(res.data), setLoading(false);
+      })
       .catch((err) => {
         if (err instanceof CanceledError) return;
         setError(err.message);
+        setLoading(false);
       });
 
     return () => controller.abort();
@@ -150,6 +155,7 @@ function app() {
         </select>
       </div>
       <div>
+        {isLoading && <div className="spinner-border"></div>}
         <h2>Data from jsonPlaceHolder</h2>
         {error && <p className="text-danger">{error}</p>}
         <ul>
