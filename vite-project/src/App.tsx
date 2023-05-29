@@ -113,6 +113,19 @@ function app() {
       });
   };
 
+  const addUser = () => {
+    const originalUser = [...users];
+    const newUser = { id: 0, name: "baibhav" };
+    setUsers([newUser, ...users]);
+    axios
+      .post("https://jsonplaceholder.typicode.com/users", newUser)
+      .then(({ data: savedUser }) => setUsers([savedUser, ...users]))
+      .catch((err) => {
+        setError(err.message);
+        setUsers(originalUser);
+      });
+  };
+
   return (
     <>
       {alertVisible && (
@@ -169,6 +182,9 @@ function app() {
         {isLoading && <div className="spinner-border"></div>}
         <h2>Data from jsonPlaceHolder</h2>
         {error && <p className="text-danger">{error}</p>}
+        <button className="btn btn-primary mb-3" onClick={addUser}>
+          Add User
+        </button>
         <ul className="list-group">
           {users.map((user) => (
             <li
